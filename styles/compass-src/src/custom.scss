@@ -1,5 +1,7 @@
 @import "compass";
- 
+
+@import "helpers/vars";
 @import "modules/general";
+@import "partials/nav";
 @import "partials/home";
 @import "modules/queries";
