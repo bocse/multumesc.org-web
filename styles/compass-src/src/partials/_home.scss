@@ -1,13 +1,20 @@
+
+#homeTitle {
+	text-align: center;
+}
+
 #page-wrapper {
 	.page-header {
 		display: inline-block;
+		border: none; //overwrites default border
+		padding-bottom: 0;
 	}
 }
 
 .deputyDetailsLink {
 	img {
 		float: left;
-		margin-right: 10px;
+		margin-right: 5px;
 	}
 }
 
