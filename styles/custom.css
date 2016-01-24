@@ -1,3 +1,7 @@
+#wrapper {
+  padding: 0 2%;
+}
+
 .small {
   font-size: 14px;
 }
@@ -14,9 +18,16 @@
   font-size: 24px;
 }
 
+.emphasis {
+  color: #c9302c;
+}
+.emphasis:hover {
+  color: #9f2623;
+}
+
 #wrapper nav {
   margin-bottom: 0;
-  padding: 20px 0;
+  padding: 10px 0;
   border: none;
 }
 #wrapper nav > ul {
@@ -26,8 +37,8 @@
   color: #FFF;
   border-radius: 0px;
   margin-left: -5px;
-  font-size: 16px;
-  margin-top: -20px;
+  font-size: 14px;
+  margin-top: 15px;
 }
 #wrapper .page-title span {
   display: block;
@@ -37,13 +48,19 @@
   padding-bottom: 5px;
 }
 
+#homeTitle {
+  text-align: center;
+}
+
 #page-wrapper .page-header {
   display: inline-block;
+  border: none;
+  padding-bottom: 0;
 }
 
 .deputyDetailsLink img {
   float: left;
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 /* Large desktop, full HD */

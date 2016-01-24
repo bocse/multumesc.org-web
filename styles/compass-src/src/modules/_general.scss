@@ -23,4 +23,7 @@
 //color classes
 .emphasis {
 	color: $attention-color;
+	&:hover {
+		color: darken($attention-color, 10%);
+	}
 }
