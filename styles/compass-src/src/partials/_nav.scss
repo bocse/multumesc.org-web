@@ -1,0 +1,30 @@
+//navbar restyle over bootstrap
+
+#wrapper {
+	nav {
+		margin-bottom: 0;
+		padding: 20px 0;
+		border: none;
+		>ul {
+			margin-right: 0;
+			a {
+				color: #FFF;
+				border-radius: 0px;
+				margin-left: -5px;
+				font-size: $font16;
+				margin-top: -20px;
+			}
+		}
+	}
+	.page-title {
+		span {
+			display: block;
+			color: $firm-color;
+			&:first-of-type {
+				padding-bottom: 5px;
+			}
+		}
+	}
+}
+
+
