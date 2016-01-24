@@ -1,3 +1,51 @@
+.small {
+  font-size: 14px;
+}
+
+.normal {
+  font-size: 16px;
+}
+
+.large {
+  font-size: 18px;
+}
+
+.xlarge {
+  font-size: 24px;
+}
+
+#wrapper nav {
+  margin-bottom: 0;
+  padding: 20px 0;
+  border: none;
+}
+#wrapper nav > ul {
+  margin-right: 0;
+}
+#wrapper nav > ul a {
+  color: #FFF;
+  border-radius: 0px;
+  margin-left: -5px;
+  font-size: 16px;
+  margin-top: -20px;
+}
+#wrapper .page-title span {
+  display: block;
+  color: #58585A;
+}
+#wrapper .page-title span:first-of-type {
+  padding-bottom: 5px;
+}
+
+#page-wrapper .page-header {
+  display: inline-block;
+}
+
+.deputyDetailsLink img {
+  float: left;
+  margin-right: 10px;
+}
+
 /* Large desktop, full HD */
 /* Landscape tablet to desktop */
 /* Landscape tablet*/
