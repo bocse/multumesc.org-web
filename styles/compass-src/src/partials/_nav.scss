@@ -8,11 +8,12 @@
 		>ul {
 			margin-right: 0;
 			a {
+				width: 240px;
+				margin-top: 15px;
+				margin-left: -5px;
+				font-size: $font14;					
 				color: #FFF;
 				border-radius: 0px;
-				margin-left: -5px;
-				font-size: $font14;
-				margin-top: 15px;
 			}
 		}
 	}

@@ -22,7 +22,8 @@
 	margin-bottom: 20px;
     text-align: right;
 	#searchTrigger {
-		padding: 10px 40px;
+		width: 240px; //same as nav pill
+		padding: 10px;
 		@include border-radius(2px);
 		font-size: $font16;
 	}
