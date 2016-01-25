@@ -118,35 +118,43 @@
             <!-- /.col-lg-12 -->
         </div>
         <div id="searchButtonContainer">
-            <button type="button" id="searchTrigger" class="btn btn-danger btn-lg">
+            <button type="button" id="searchTrigger" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#search">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                 Găsește deputatul tău
                 <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
             </button>
         </div>
-        <div id="search" style="display: none;">
-            <div>
-                <p>
-					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					Caută deputatul care te reprezintă după județul, localitatea și strada ta  de domiciliu.
-				</p>
-                <div class="input-group">
-                    <select class="form-control" id="circumscription" name="circumscription">
-                        <option selected="true" style="display:none;" value="">Județ</option>
-                    </select>
+	
+		<div class="modal fade" id="search" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<p class="modal-title small" id="searchModal"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+								Caută deputatul care te reprezintă după județul, localitatea și strada ta  de domiciliu.</p>
+						</div>
+						<div class="modal-body">
+							<div class="input-group">
+								<select class="form-control" id="circumscription" name="circumscription">
+									<option selected="true" style="display:none;" value="">Județ</option>
+								</select>
 
-                    <select style="display:none;" class="form-control" id="localityDropdown" name="locality">
-                        <option selected="true" style="display:none;" value="">Localitate</option>
-                    </select>
-					
-                    <input style="display: none;" type="text" class="form-control" id="street" placeholder="Strada (ex: ferdinand, unirii, indepentei)">
-                    <button style="display: none;" type="button" id="doSearch" class="btn btn-danger pull-right">Caută deputatul!</button>
-                </div><!-- /input-group -->
-            </div><!-- /.col-lg-6 -->
-			<table class="table" id="searchResults">
+								<select style="display:none;" class="form-control" id="localityDropdown" name="locality">
+									<option selected="true" style="display:none;" value="">Localitate</option>
+								</select>
 
-			</table>
-        </div><!-- /.row -->
+								<input style="display: none;" type="text" class="form-control" id="street" placeholder="Strada (ex: ferdinand, unirii, independentei)">
+								<button style="display: none;" type="button" id="doSearch" class="btn btn-danger pull-right">Caută deputatul!</button>
+							</div><!-- /input-group -->
+
+							<table class="table" id="searchResults">
+
+							</table>
+						</div>
+					</div>
+				</div>
+		</div>
+				
         <!-- /.row -->
         <div class="row">
             <div class="col-lg-12">
@@ -536,17 +544,17 @@
         });
         paintResults(matchedColegiu);
     }
-    function paintResults(matchedColegiu)
-    {
-        $('#searchResults').empty();
+    function paintResults(matchedColegiu){
+		var searchResults = $('#searchResults');
+        searchResults.empty();
         if (Object.keys(matchedColegiu).length == 0)
         {
-            $('#searchResults').append('Nu am gasit rezultate.');
+            searchResults.append('Nu am gasit rezultate.');
             return ;
         }
         var circumscription=$('#circumscription').val();
         var itemString='<thead> <tr> <th>Județ / Circumscripție</th> <th>Stradă/Adrese</th> <th>Colegiu</th> <th>Nume deputat</th></tr></thead>';
-        $('#searchResults').append(itemString);
+        searchResults.append(itemString);
         for (var address in matchedColegiu) {
             var colegiu = matchedColegiu[address];
             itemString='<tr>';
@@ -555,10 +563,10 @@
             itemString+='<td>'+capitalizeFirstLetter(address)+'</td>';
             itemString+='<td>'+colegiu+'</td>';
             var deputyName=searchDeputyByCircumscription(circumscription, colegiu)
-            var deputyString='<a href="#deputyDetailsTab" class="deputyDetailsLink" deputyname="'+deputyName+'">'+deputyName+'</a>';
+            var deputyString='<a href="#deputyDetailsTab" class="deputyDetailsLink" deputyname="'+deputyName+'" onclick=" $(\'#search\').modal(\'hide\');return false;">'+deputyName+'</a>';
             itemString+='<td>'+deputyString+'</td>';
             itemString+='</tr>';
-            $('#searchResults').append(itemString);
+            searchResults.append(itemString);
         }
     }
     function searchDeputyByCircumscription(circumscription, colegiu)
@@ -1082,7 +1090,6 @@
         });
 
         $('#searchTrigger').click(function () {
-            $('#searchTrigger').text("Se încarcă 35,000+ de străzi din 2,500+ localități ...");
             $.ajax({
                 url: serviceURL + 'data/circumscription.min.json',
                 type: 'GET',
@@ -1095,13 +1102,13 @@
                 },
                 success: function (res) {
                     loadedCircumscriptionData = res;
-                    $('#searchButtonContainer').fadeOut(1);
-                    $('#search').fadeIn(500);
                     console.log("Circumscriptions loaded: " + Object.keys(res).length);
                     showCircumscriptions();
+					$('#search').modal();
                 }
             });
-
+			
+			
 
         });
 
@@ -1142,6 +1149,7 @@
             console.debug($('#circumscription').val());
             searchLocality($('#circumscription').val(), $('#localityDropdown').val());
         });
+		  
     });
 </script>
 <!-- GA Script -->

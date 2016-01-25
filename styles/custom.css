@@ -63,6 +63,40 @@
   margin-right: 5px;
 }
 
+#searchButtonContainer {
+  margin-bottom: 20px;
+  text-align: right;
+}
+#searchButtonContainer #searchTrigger {
+  padding: 10px 40px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  font-size: 16px;
+}
+
+#search > div:first-of-type {
+  float: right;
+  margin: 20px 2%;
+}
+#search > div:first-of-type .input-group {
+  display: inline-block;
+  width: 570px;
+  overflow: hidden;
+}
+#search > div:first-of-type .input-group select {
+  margin-bottom: 20px;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+#search > div:first-of-type .input-group select:first-of-type {
+  margin-top: 30px;
+}
+#search .modal-content {
+  min-height: 290px;
+}
+
 /* Large desktop, full HD */
 /* Landscape tablet to desktop */
 /* Landscape tablet*/

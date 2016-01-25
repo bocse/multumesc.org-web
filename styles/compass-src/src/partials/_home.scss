@@ -31,13 +31,22 @@
 #search {
 	>div:first-of-type {
 		float: right;
+		margin: 20px 2%;
 		.input-group {
-			float: right;
-			width: 100%;
+			display: inline-block;
+			width: 570px;
+			overflow: hidden;
 			select {
 				margin-bottom: 20px;
+				@include border-radius(0);
+				&:first-of-type {
+					margin-top: 30px;
+				}
 			}
 		}
+	}
+	.modal-content {
+		min-height: 290px;	
 	}
 }
 
