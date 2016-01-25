@@ -6,16 +6,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Prezența la vot a deputaților României">
+    <meta name="description" content="Absența la vot a deputaților României">
     <meta name="keywords" content="prezenta camera deputatilor, multumesc, absenta camera deputatilor, absenta deputati, deputati chiulangii, absenta senat, absenteism parlament, absenteism deputati, deputati, statistici deputati, senatori, senat"/>
     <meta name="author" content="Bogdan Bocșe">
 
-    <title>Multumesc.org - Prezența la vot a deputaților României</title>
+    <title>Multumesc.org - Absența la vot a deputaților României</title>
     <link rel="shortcut icon" type="image/png" href="images/logo.png"/>
     <link rel="image_src" type="image/png" href="http://multumesc.org/images/logo.png" />
     <meta property="og:url"                content="http://multumesc.org" />
     <meta property="og:type"               content="website" />
-    <meta property="og:title"              content="Prezența la vot a deputaților României " />
+    <meta property="og:title"              content="Absența la vot a deputaților României " />
     <meta property="og:description"        content="Află exact cât lipsește fiecare deputat de la voturile plenare. Statistici actualizate zilnic, individual și per partid." />
     <meta property="og:image"              content="http://multumesc.org/images/logo.png" />
 
@@ -87,7 +87,7 @@
             <!--</button>-->
             <a class="navbar-brand page-title" href="/">
 				<span class="xlarge">Mulțumesc.org</span>
-                <span>Prezența la vot a deputaților României</span>
+                <span>Absența la vot a deputaților României</span>
             </a>
         </div>
         <!-- /.navbar-header -->
@@ -117,6 +117,39 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
+        <div class="row" id="searchButtonContainer">
+            <button type="button" id="searchTrigger" class="btn btn-danger btn-lg pull-right">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                Găsește deputatul tău
+                <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+            </button>
+        </div>
+        <div class="row" id="search" style="display: none;">
+            <div class="col-lg-12">
+                <p style="font-weight: bold;"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span>Caută deputatul care te reprezintă după județul, localitatea și strada ta  de domiciliu.</p>
+                <div class="input-group">
+                    <select class="form-control" id="circumscription" name="circumscription">
+                        <option selected="true" style="display:none;" value="">Județ</option>
+                    </select>
+
+                    <select style="display:none;" class="form-control" id="localityDropdown" name="locality">
+                        <option selected="true" style="display:none;" value="">Localitate</option>
+                    </select>
+
+
+
+
+                    <input  style="display: none;" type="text" class="form-control" id="street" placeholder="Strada (ex: ferdinand, unirii, indepentei)">
+                    <button style="display: none;" type="button" id="doSearch" class="btn btn-danger pull-right">Caută deputatul!</button>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+            <div class="col-lg-12">
+                <table class="table" id="searchResults">
+
+                </table>
+                <!--<ul class="list-group" id="searchResults"></ul>-->
+            </div>
+        </div><!-- /.row -->
         <!-- /.row -->
         <div class="row">
             <div class="col-lg-12">
@@ -393,6 +426,7 @@
     var loadedIndividualData = null;
     var loadedPartyData = null;
     var preparedIndividualData = null;
+    var loadedCircumscriptionData=null;
     var preparedPartyData = null;
     var selectedProfileUrl='http://multumesc.org';
     var maxRed = 250;
@@ -404,7 +438,153 @@
     var errorCount = null;
     var succesful = null;
 
+    function showCircumscriptions()
+    {
+        //$('#circumscriptionList').empty();
+        $.each(loadedCircumscriptionData, function (key, item) {
+            var keyCopy=key;
+            if (key=="diaspora")
+                return ;
+            if (key.toLowerCase()=="strainatate")
+                keyCopy="DIASPORA";
+            $('#circumscription').append('<option value="'+key+'">'+capitalizeFirstLetter(keyCopy)+'</option>');
+        });
+    }
+    function showLocalitites(chosenCircumscription)
+    {
 
+        var localitySet=[];
+        var localityArray=[];
+        $.each(loadedCircumscriptionData[chosenCircumscription], function (key, item) {
+            $.each(item, function (localitate, biproduct) {
+                localitySet[localitate]=true;
+                //$('#locality').append('<option value="' + localitate + '">' + localitate + '</option>');
+            });
+        });
+
+        $('#localityDropdown').empty();
+        if (chosenCircumscription.toLowerCase()!='strainatate')
+            $('#localityDropdown').append('<option value="">Toate localitățile din județ</option>');
+        else
+            $('#localityDropdown').append('<option value="">Toate țările din diaspora</option>');
+
+        for (var localitate in localitySet) {
+            localityArray.push(localitate);
+        }
+        localityArray.sort();
+        for (var i=0; i<localityArray.length; i++)
+        {
+            localitate=localityArray[i];
+            $('#localityDropdown').append('<option value="' + localitate + '">' + capitalizeFirstLetter( localitate )+ '</option>');
+
+        }
+        $('#localityDropdown').fadeIn(1);
+    }
+    function searchLocality(chosenCircumscription, locality) {
+        var matchedColegiu=[];
+        var anyWithAddress=false;
+        $.each(loadedCircumscriptionData[chosenCircumscription], function (colegiu, localities) {
+            $.each(localities, function (localitate, addresses) {
+                if (localitate == locality) {
+
+                    if (addresses.length == 0) {
+                        matchedColegiu[locality] = colegiu;
+                    }
+                    else
+                    {
+                        anyWithAddress=true;
+                    }
+                }
+            });
+        });
+        if (!anyWithAddress && locality!="")
+        {
+            $('#street').fadeOut(1);
+            //$('#doSearch').fadeOut(1);
+        }
+        else
+        {
+            $('#street').fadeIn(1);
+            //$('#doSearch').fadeIn(1);
+        }
+
+        paintResults(matchedColegiu);
+    }
+    function searchAddress(chosenCircumscription, locality, street)
+    {
+        if (chosenCircumscription=='bucuresti')
+        {locality="";}
+        var matchedColegiu=[];
+        street=street.toLowerCase();
+        $.each(loadedCircumscriptionData[chosenCircumscription], function (colegiu, localities) {
+            $.each(localities, function (localitate, addresses) {
+                if (localitate==locality || locality=="") {
+                    if (addresses.length>0)
+                    {
+                        for (var addressIndex in addresses)
+                        {
+                            var address=addresses[addressIndex];
+                            if (address.indexOf(street)>-1)
+                            {
+                                if (chosenCircumscription!='bucuresti') {
+                                    matchedColegiu[localitate + ' - ' + address] = colegiu;
+
+                                }
+                                else
+                                {
+                                    matchedColegiu[address] = colegiu;
+                                }
+                                console.debug(address + ' ' + colegiu);
+                            }
+                        }
+                    }
+                    //console.debug(addresses.length);
+                    //<li class="list-group-item">Cras justo odio</li>
+                }
+                //$('#locality').append('<option value="' + localitate + '">' + localitate + '</option>');
+            });
+        });
+        paintResults(matchedColegiu);
+    }
+    function paintResults(matchedColegiu)
+    {
+        $('#searchResults').empty();
+        if (Object.keys(matchedColegiu).length == 0)
+        {
+            $('#searchResults').append('Nu am gasit rezultate.');
+            return ;
+        }
+        var circumscription=$('#circumscription').val();
+        var itemString='<thead> <tr> <th>Județ / Circumscripție</th> <th>Stradă/Adrese</th> <th>Colegiu</th> <th>Nume deputat</th></tr></thead>';
+        $('#searchResults').append(itemString);
+        for (var address in matchedColegiu) {
+            var colegiu = matchedColegiu[address];
+            itemString='<tr>';
+
+            itemString+='<td>'+capitalizeFirstLetter(circumscription)+'</td>';
+            itemString+='<td>'+capitalizeFirstLetter(address)+'</td>';
+            itemString+='<td>'+colegiu+'</td>';
+            var deputyName=searchDeputyByCircumscription(circumscription, colegiu)
+            var deputyString='<a href="#deputyDetailsTab" class="deputyDetailsLink" deputyname="'+deputyName+'">'+deputyName+'</a>';
+            itemString+='<td>'+deputyString+'</td>';
+            itemString+='</tr>';
+            $('#searchResults').append(itemString);
+        }
+    }
+    function searchDeputyByCircumscription(circumscription, colegiu)
+    {
+        var localResult=null;
+        if (circumscription.toLowerCase()=="strainatate")
+            circumscription='diaspora';
+        $.each(loadedIndividualData, function (key, item) {
+            if (item.colegiu == colegiu && (circumscription==item.county))
+            {
+                localResult=key;
+                return localResult;
+            }
+        });
+        return localResult;
+    }
     function parseParameter(val) {
         var result = null,
                 tmp = [];
@@ -625,8 +805,10 @@
                 options);
     }
 
-    function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
+    function capitalizeFirstLetter(str) {
+        //return str.charAt(0).toUpperCase() + str.slice(1);
+        return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+
     }
 
     function renderTable() {
@@ -678,7 +860,7 @@
             stateSave: true,
             iDisplayLength: 10,
             stateDuration: 43200,
-            "order": [[4, "desc"]]
+            "order": [[5, "desc"]]
         });
     }
 
@@ -904,6 +1086,72 @@
             plotParties(-1);
         });
 
+
+        $('#doSearch').click(function () {
+            searchAddress($('#circumscription').val(), $('#localityDropdown').val(), $('#street').val());
+        });
+
+        $('#searchTrigger').click(function () {
+            $('#searchTrigger').text("Se încarcă 35,000+ de străzi din 2,500+ localități ...");
+            $.ajax({
+                url: serviceURL + 'data/circumscription.min.json',
+                type: 'GET',
+                async: true,
+                cache: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.error(thrownError);
+                },
+                success: function (res) {
+                    loadedCircumscriptionData = res;
+                    $('#searchButtonContainer').fadeOut(1);
+                    $('#search').fadeIn(500);
+                    console.log("Circumscriptions loaded: " + Object.keys(res).length);
+                    showCircumscriptions();
+                }
+            });
+
+
+        });
+
+        $('#circumscription').change(function () {
+            console.debug($('#circumscription').val());
+            if ($('#circumscription').val() != 'bucuresti') {
+                showLocalitites($('#circumscription').val());
+                if ($('#circumscription').val() != 'STRAINATATE') {
+                    $('#street').fadeIn(1);
+                }
+                else {
+                    $('#street').fadeOut(1);
+                }
+
+            }
+            else {
+                $('#localityDropdown').fadeOut(1);
+                //$('#doSearch').fadeIn(1);
+                $('#street').fadeIn(1);
+
+
+            }
+            $('#searchResults').empty();
+        });
+        $('#street').keyup(function () {
+            if ($('#street').val().length > 2) {
+                searchAddress($('#circumscription').val(), $('#localityDropdown').val(), $('#street').val());
+            }
+        });
+
+        $('#street').keypress(function (e) {
+            if (e.which == 13) {
+                searchAddress($('#circumscription').val(), $('#localityDropdown').val(), $('#street').val());
+
+            }
+        });
+        $('#localityDropdown').change(function () {
+            console.debug($('#circumscription').val());
+            searchLocality($('#circumscription').val(), $('#localityDropdown').val());
+        });
     });
 </script>
 <!-- GA Script -->
