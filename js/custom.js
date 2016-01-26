@@ -134,14 +134,19 @@ var App = {
 				itemString += '<td>' + App.capitalizeFirstLetter(address) + '</td>';
 				itemString += '<td>' + colegiu + '</td>';
 				var deputyName = App.searchDeputyByCircumscription(circumscription, colegiu);
-				var deputyString = '<a href="#deputyDetailsTab" class="deputyDetailsLink" deputyname="'
-						+ deputyName
-						+ '" onclick=" $(\'#search\').modal(\'hide\');return false;">'
-						+ deputyName + '</a>';
+				var deputyString = '<a href="#" class="deputyDetailsModalLink deputyDetailsLink" deputyname="' + deputyName + '">' + deputyName + '</a>';
 				itemString += '<td>' + deputyString + '</td>';
 				itemString += '</tr>';
 				searchResults.append(itemString);
 			}
+			
+			$('.deputyDetailsModalLink').click(function() {
+				$('#search').modal('hide').on('hidden.bs.modal', function() {
+					$('html, body').animate({
+	                    scrollTop: $('#deputyDetailsTab').offset().top
+	                }, 500);
+				});
+			});
 		},
 		
 		searchDeputyByCircumscription: function(circumscription, colegiu) {
@@ -747,7 +752,7 @@ $(document).ready(function() {
 					.on(
 							'click',
 							'.deputyDetailsLink',
-							function() {
+							function(event) {
 								var deputyName = event.target.attributes["deputyName"].nodeValue;
 								App.plotIndividual(deputyName);
 								App.createProfileData(deputyName);
