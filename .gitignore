@@ -1,2 +1,5 @@
 /styles/compass-src/.sass-cache/
 compile.bat
+bin
+.project
+.pydevproject
