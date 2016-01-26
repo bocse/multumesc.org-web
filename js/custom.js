@@ -814,6 +814,8 @@ $(document).ready(function() {
 								+ Object
 										.keys(res).length);
 				App.showCircumscriptions();
+				$('#waitingSearchLoad').delay(100).fadeOut(1000);
+				$('#searchInputGroup').delay(500).fadeIn(1000);
 				$('#search').modal();
 			}
 		});
