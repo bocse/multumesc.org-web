@@ -749,7 +749,7 @@ $(document).ready(function() {
 			} catch (err) {
 				console.error(err.message);
 			}
-			$('.deputyDetailsLink').on('click', function(event) {
+			$('body').on('click', '.deputyDetailsLink', function(event) {
 				var deputyName = event.target.attributes["deputyName"].nodeValue;
 				App.plotIndividual(deputyName);
 				App.createProfileData(deputyName);
