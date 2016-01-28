@@ -214,6 +214,10 @@ table tr:hover td {
   min-height: 290px;
 }
 
+table#searchResults {
+  border: none;
+}
+
 #profileUrlWrapper span {
   display: block;
 }
