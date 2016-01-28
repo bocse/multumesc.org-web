@@ -173,7 +173,7 @@ var App = {
 		createProfileData: function(nume) {
 			var item = App.loadedIndividualData[nume];
 			var smallPictureURL = item.pictureURL.replace("/mari", "");
-			$('#big-picture').attr("src", smallPictureURL);
+			$('.big-picture').attr("src", smallPictureURL);
 
 			$('.deputyDetailsTitle').text(item.fullName);
 			$('#currentParty').text(item.currentParty);
@@ -600,7 +600,8 @@ var App = {
 									+ '" width="48" height="64" class="deputyDetailsLink"  deputyName="'
 									+ item.fullName
 									+ '"/>'
-									+ item.fullName + '</a>');
+									+ '<span deputyName="' + item.fullName + '">' + item.fullName + '</span>'
+									+ '</a>');
 					localCandidate.push(item.currentParty);
 					localCandidate
 							.push(App.capitalizeFirstLetter(item.county));
@@ -743,16 +744,12 @@ $(document).ready(function() {
 			} catch (err) {
 				console.error(err.message);
 			}
-			$('body')
-					.on(
-							'click',
-							'.deputyDetailsLink',
-							function() {
-								var deputyName = event.target.attributes["deputyName"].nodeValue;
-								App.plotIndividual(deputyName);
-								App.createProfileData(deputyName);
+			$('.deputyDetailsLink').on('click', function() {
+				var deputyName = event.target.attributes["deputyName"].nodeValue;
+				App.plotIndividual(deputyName);
+				App.createProfileData(deputyName);
 
-							});
+			});
 		}
 	});
 

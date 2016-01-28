@@ -167,8 +167,16 @@ table tr:hover td {
 }
 
 .deputyDetailsLink img {
-  float: left;
-  margin-right: 5px;
+  width: 30%;
+  height: auto;
+  border-radius: 4px;
+}
+.deputyDetailsLink span {
+  display: inline-block;
+  width: 60%;
+  margin-left: 4%;
+  margin-right: 6%;
+  vertical-align: middle;
 }
 
 #searchButtonContainer {
@@ -206,6 +214,29 @@ table tr:hover td {
   min-height: 290px;
 }
 
+#profileUrlWrapper span {
+  display: block;
+}
+#profileUrlWrapper input {
+  min-width: 20%;
+  position: relative;
+  top: 1px;
+}
+
+.big-picture {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#facebookShareUrlProfile {
+  margin-bottom: 20px;
+}
+
+table.dataTable thead .sorting:after {
+  opacity: 0.6;
+}
+
 .table-bordered > tbody > tr > td,
 .table-bordered > tbody > tr > th,
 .table-bordered > tfoot > tr > td,
@@ -218,9 +249,46 @@ table tr:hover td {
 #page-wrapper .panel {
   background-color: transparent;
   border: none;
+  box-shadow: none;
 }
 #page-wrapper .panel-body {
   padding: 0;
+}
+
+table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td {
+  vertical-align: middle;
+}
+
+#absenceRate .panel, #dataDownloadWrapper .panel, #deputyDetailsTab .panel {
+  background: white;
+  -moz-box-shadow: 0 1px 2px #d1d1d1;
+  -webkit-box-shadow: 0 1px 2px #d1d1d1;
+  box-shadow: 0 1px 2px #d1d1d1;
+}
+#absenceRate .panel-heading, #dataDownloadWrapper .panel-heading, #deputyDetailsTab .panel-heading {
+  background: #FFF;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 20px;
+}
+#absenceRate .panel-body, #dataDownloadWrapper .panel-body, #deputyDetailsTab .panel-body {
+  padding: 20px;
+}
+#absenceRate .btn-group, #dataDownloadWrapper .btn-group, #deputyDetailsTab .btn-group {
+  padding-left: 45px;
+}
+#absenceRate .btn-group label:first-of-type, #dataDownloadWrapper .btn-group label:first-of-type, #deputyDetailsTab .btn-group label:first-of-type {
+  display: block;
+}
+#absenceRate .legendColorBox, #absenceRate .legendLabel, #dataDownloadWrapper .legendColorBox, #dataDownloadWrapper .legendLabel, #deputyDetailsTab .legendColorBox, #deputyDetailsTab .legendLabel {
+  padding: 5px;
+  padding-left: 5px;
+}
+
+div.dataTables_wrapper div.dataTables_paginate {
+  position: relative;
+  top: 20px;
 }
 
 #badgeWrapper img {

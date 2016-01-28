@@ -13,8 +13,16 @@
 
 .deputyDetailsLink {
 	img {
-		float: left;
-		margin-right: 5px;
+		width: 30%;
+    height: auto;
+    border-radius: 4px;
+	}
+	span {
+	  display: inline-block;
+	  width: 60%;
+	  margin-left: 4%;
+	  margin-right: 6%;
+	  vertical-align: middle;
 	}
 }
 
@@ -51,7 +59,33 @@
 	}
 }
 
+//details tab
+#profileUrlWrapper {
+  span {
+    display: block;
+  }
+  input {
+    min-width: 20%;
+    position: relative;
+    top: 1px;
+  }
+}
+
+.big-picture {
+  @include border-radius(5px);  
+}
+
+#facebookShareUrlProfile {
+  margin-bottom: 20px;
+}
+
 //table overwrites
+
+//filter :after
+table.dataTable thead .sorting:after {
+    opacity: 0.6;
+}
+
 .table-bordered>tbody>tr>td,
 .table-bordered>tbody>tr>th,
 .table-bordered>tfoot>tr>td,
@@ -65,16 +99,48 @@
   .panel {
     background-color: transparent;
     border: none;
+    box-shadow: none;
   }
   .panel-body {
     padding: 0;
   }
 }
 
+table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td {
+    vertical-align: middle;
+}
 
+#absenceRate, #dataDownloadWrapper, #deputyDetailsTab {
+  .panel {
+    background: white;
+    @include box-shadow (0 1px 2px #d1d1d1);
+  }
+  .panel-heading{
+    background: #FFF;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 20px;
+  }
+  .panel-body {
+    padding: 20px;
+  }
+  .btn-group {
+    padding-left: 45px;
+    label:first-of-type {
+      display: block;
+    }
+  }
+  .legendColorBox, .legendLabel {
+    padding: 5px;
+    padding-left: 5px;
+  }
+}
 
-
-
+div.dataTables_wrapper div.dataTables_paginate {
+  position: relative;
+  top: 20px;
+}
 
 
 
