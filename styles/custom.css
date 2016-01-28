@@ -227,6 +227,7 @@ table tr:hover td {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+  width: 240px;
 }
 
 #facebookShareUrlProfile {
@@ -295,6 +296,10 @@ div.dataTables_wrapper div.dataTables_paginate {
   width: 200px;
   margin-right: 20px;
   margin-top: 20px;
+}
+
+#statistici-senatori img {
+  width: 40%;
 }
 
 /* Large desktop, full HD */

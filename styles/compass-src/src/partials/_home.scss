@@ -72,7 +72,8 @@
 }
 
 .big-picture {
-  @include border-radius(5px);  
+  @include border-radius(5px);
+  width: 240px;
 }
 
 #facebookShareUrlProfile {
