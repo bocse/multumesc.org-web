@@ -1,10 +1,10 @@
 table a:link {
-  color: #666;
+  color: $link-color;
   font-weight: bold;
   text-decoration:none;
 }
 table a:visited {
-  color: #999999;
+  color: darken($link-color, 10%);
   font-weight:bold;
   text-decoration:none;
 }

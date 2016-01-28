@@ -26,13 +26,13 @@
 }
 
 table a:link {
-  color: #666;
+  color: #337ab7;
   font-weight: bold;
   text-decoration: none;
 }
 
 table a:visited {
-  color: #999999;
+  color: #285f8f;
   font-weight: bold;
   text-decoration: none;
 }
@@ -212,6 +212,10 @@ table tr:hover td {
 }
 #search .modal-content {
   min-height: 290px;
+}
+
+#waitingSearchLoad {
+  position: absolute;
 }
 
 table#searchResults {
