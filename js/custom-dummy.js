@@ -5,7 +5,6 @@ var App = {
 		preparedIndividualData: null,
 		loadedCircumscriptionData: null,
 		preparedPartyData: null,
-        blacklist:['dragnea','thuma','ponta','dolha'],
 		selectedProfileUrl: 'http://multumesc.org',
 		maxRed: 250,
 		maxBlue: 230,
@@ -287,8 +286,7 @@ var App = {
 			$('#dnaList').html('');
 			var records=item.confirmedRecordList.concat(item.otherRecordList);
 			$('#penalty').text(records.length+'');
-            var blacklisted= $.inArray(item.lastName.toLowerCase(), App.blacklist );
-			if (item.confirmedRecordList.length >0 || (item.otherRecordList.length>0 && blacklisted>-1)) {
+			if (item.confirmedRecordList.length >0) {
 				$(".penaltyLabel").fadeIn(2000);
 				$.each(records,
 					function (keyRecord, record) {
@@ -635,8 +633,7 @@ var App = {
 						localCandidate.push(item.colegiu);
 					else
 						localCandidate.push("-");
-                    var blacklisted= $.inArray(item.lastName.toLowerCase(), App.blacklist );
-					if (item.confirmedRecordList.length > 0 || (item.otherRecordList.length>0 && blacklisted>-1))
+					if (item.confirmedRecordList.length > 0)
 					{
 						var penality=item.confirmedRecordList.length+item.otherRecordList.length;
 						localCandidate.push('<a href="#" class="deputyDetailsLink" style="color:red;" deputyName="'
@@ -647,7 +644,9 @@ var App = {
                     else if (item.otherRecordList.length>0)
                     {
 
-                        console.debug("Needs review: "+item.firstName+' '+item.lastName+' '+item.county+' '+item.otherRecordList[0].link);
+
+                            console.debug(item.firstName+' '+item.lastName+' '+item.county+' '+item.otherRecordList[0].link);
+
                         localCandidate.push("0");
                     }
 					else
