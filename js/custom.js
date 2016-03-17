@@ -9,6 +9,7 @@ var App = {
 		maxRed: 250,
 		maxBlue: 230,
 		epsilon: 0.00001,
+		penals:0,
 		lastUpdateDate: null,
 		lastUpdateTimestamp: null,
 		crawlTime: null,
@@ -268,7 +269,7 @@ var App = {
 			} else {
 				$passedLaw.text('0');
 			}
-			
+
 			var $absence30 = $('#absence30');
 			if (item.statsLast30Days.TOTAL.value > 0) {
 				var absence30 = Math.round(10.0 * 100.0
@@ -282,7 +283,21 @@ var App = {
 			} else {
 				$absence30.text("n/a");
 			}
-			
+			$('#dnaList').html('');
+			var records=item.confirmedRecordList.concat(item.otherRecordList);
+			$('#penalty').text(records.length+'');
+			if (records.length >0) {
+				$(".penaltyLabel").fadeIn(2000);
+				$.each(records,
+					function (keyRecord, record) {
+						$('#dnaList').append('<p><a style="color:red;"  target="_blank" href="' + record.link + '">' + record.date + ' ' + record.title + ' </a> </p>');
+					}
+				);
+			}
+			else
+			{
+				$(".penaltyLabel").fadeOut(2);
+			}
 			var $absence90 = $('#absence90');
 			if (item.statsLast90Days.TOTAL.value > 0) {
 				var absence90 = Math.round(10.0 * 100.0
@@ -482,7 +497,10 @@ var App = {
 					title : "Județ"
 				}, {
 					title : "Colegiu"
-				}, {
+				},
+					{
+						title : "Indice de penalitate (număr comunicate DNA)"
+					},{
 					title : "Absențe în ultimele 30 zile"
 				}, {
 					title : "Absență în ultimele 90 zile"
@@ -505,10 +523,10 @@ var App = {
 				}
 
 				],
-				stateSave : true,
+				stateSave : false,
 				iDisplayLength : 10,
 				stateDuration : 43200,
-				"order" : [ [ 5, "desc" ] ]
+				"order" : [ [ 4, "desc" ] ]
 			});
 		},
 		
@@ -589,6 +607,7 @@ var App = {
 		
 		prepareIndividualData: function(res) {
 			App.preparedIndividualData = [];
+
 			$.each(res, function(key, item) {
 				// console.info(item.fullName);
 
@@ -614,7 +633,18 @@ var App = {
 						localCandidate.push(item.colegiu);
 					else
 						localCandidate.push("-");
-
+					if (item.confirmedRecordList.length > 0 || item.otherRecordList.length>0)
+					{
+						var penality=item.confirmedRecordList.length+item.otherRecordList.length;
+						localCandidate.push('<a href="#" class="deputyDetailsLink" style="color:red;" deputyName="'
+							+ item.fullName
+							+ '">'+penality+'</a>');
+						App.penals++;
+					}
+					else
+					{
+						localCandidate.push("0");
+					}
 					if (item.statsLast30Days.TOTAL.value > 0) {
 						var absence30 = Math.round(10.0 * 100.0
 								* item.statsLast30Days.ABSENT.value
@@ -698,7 +728,9 @@ var App = {
 
 				}
 			});
+			console.log("Penals: " + App.penals);
 		}
+
 };
 
 $(document).ready(function() {

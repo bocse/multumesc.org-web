@@ -6,17 +6,17 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Absența la vot a deputaților României">
+    <meta name="description" content="Penalitatea și absența la vot a deputaților României">
     <meta name="keywords" content="prezenta camera deputatilor, multumesc, absenta camera deputatilor, absenta deputati, deputati chiulangii, absenta senat, absenteism parlament, absenteism deputati, deputati, statistici deputati, senatori, senat"/>
     <meta name="author" content="Bogdan Bocșe">
 
-    <title>Multumesc.org - Absența la vot a deputaților României</title>
+    <title>Multumesc.org - Penalitatea și absența la vot a deputaților României</title>
     <link rel="shortcut icon" type="image/png" href="images/logo.png"/>
     <link rel="image_src" type="image/png" href="http://multumesc.org/images/logo.png" />
     <meta property="og:url"                content="http://multumesc.org" />
     <meta property="og:type"               content="website" />
-    <meta property="og:title"              content="Absența la vot a deputaților României " />
-    <meta property="og:description"        content="Află exact cât lipsește fiecare deputat de la voturile plenare. Statistici actualizate zilnic, individual și per partid." />
+    <meta property="og:title"              content="Penalitatea și absența la vot a deputaților României " />
+    <meta property="og:description"        content="Află exact cât de cercetate e fiecare deputat de către DNA și cât lipsește fiecare deputat de la voturile plenare. Statistici actualizate zilnic, individual și per partid." />
     <meta property="og:image"              content="http://multumesc.org/images/logo.png" />
 
     <!-- jQuery -->
@@ -81,7 +81,7 @@
         <div class="navbar-header">
             <a class="navbar-brand page-title" href="/">
 				<span class="xlarge">Mulțumesc.org</span>
-                <span>Absența la vot a deputaților României</span>
+                <span>Penalitatea și absența la vot a deputaților României</span>
             </a>
         </div>
         <!-- /.navbar-header -->
@@ -98,7 +98,7 @@
     <div id="page-wrapper">
         <div class="row">
             <div id="homeTitle" class="col-lg-12">
-                <h1 class="page-header">Statistici de absență la vot pentru Camera Deputaților</h1>
+                <h1 class="page-header">Statistici de penalitate și absență la vot pentru Camera Deputaților</h1>
 				<p>Absență medie la vot în Camera Deputaților -
                     <span>30 zile: <span id="global30">%</span></span> -
                     <span>90 zile: <span id="global90">%</span> </span>-
@@ -167,6 +167,11 @@
                                     <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1"
                                         colspan="1" aria-label="Colegiu: sortare crescătoare" style="width: 52px;">
                                         Colegiu
+                                    </th>
+                                    <th class="sorting_desc" tabindex="0" aria-controls="dataTables-example" rowspan="1"
+                                        colspan="1" aria-sort="descending"
+                                        aria-label="Indice de penalitate (număr comunicate DNA)"
+                                        style="width: 56px;color:red;">Indice de penalitate (număr comunicate DNA)
                                     </th>
                                     <th class="sorting_desc" tabindex="0" aria-controls="dataTables-example" rowspan="1"
                                         colspan="1" aria-sort="descending"
@@ -321,6 +326,9 @@
                         <p>Istoric partide: <label id="partyHistory"></label></p>
 
                         <p>Județ: <label id="county"></label> Colegiu: <label id="colegiu"></label></p>
+                        <p>&#9878;Indicele de penalitate (i.e. număr de comunicate DNA în care e implicat acest deputat): <label id="penalty"> </label></p>
+                        <p class="penaltyLabel">Comunicatele individuale se pot găsi pe site-ul PNA.ro :</p>
+                        <div id="dnaList" class="penaltyLabel"></div>
 
                         <p>Absenteism la vot în ultimele 30 zile calendaristice: <label id="absence30"></label></p>
 
