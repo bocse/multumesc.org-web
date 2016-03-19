@@ -738,6 +738,7 @@ var App = {
 				}
 			});
 			console.log("Penals: " + App.penals);
+            $('#penalCount').text(App.penals);
 		}
 
 };
