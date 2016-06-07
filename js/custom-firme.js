@@ -105,8 +105,8 @@ var App = {
                     hasCompany=true;
                     $.each(itemDeputy.date.actionar, function(keyCompany, itemCompany) {
                         console.log(itemCompany.denumire);
-                        lastYear=1990;
-                        lastBalance=null;
+                        var lastYear=1990;
+                        var lastBalance=null;
                         $.each(itemCompany.bilanturi, function(keyBalance, itemBalance) {
                             if (itemBalance.an>lastYear)
                             {
@@ -120,7 +120,7 @@ var App = {
                         localCandidate.push(deputyParty);
                         localCandidate.push(deputyCounty);
                         localCandidate.push(itemCompany.denumire);
-                        if (lastBalance)
+                        if (lastBalance!=null)
                         localCandidate.push(lastBalance.tip_activitate);
                         else
                             localCandidate.push(emptyLabel);
@@ -130,7 +130,7 @@ var App = {
                         localCandidate.push(itemCompany.stare_societate);
                         localCandidate.push(itemCompany.nr_mentiuni_BPI);
                         localCandidate.push(itemCompany.nr_dosare_juridice);
-                        if (lastBalance)
+                        if (lastBalance!=null)
                         {
                             localCandidate.push(lastBalance.an);
                             localCandidate.push(lastBalance.numar_mediu_angajati);
