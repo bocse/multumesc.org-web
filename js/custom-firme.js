@@ -111,7 +111,7 @@ var App = {
                             if (itemBalance.an>lastYear)
                             {
                                 lastYear=itemBalance.an;
-                                lastYear=itemBalance;
+                                lastBalance=itemBalance;
                             }
                         });
                         var localCandidate = [];
