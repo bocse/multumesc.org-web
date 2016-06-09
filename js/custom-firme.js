@@ -1,3 +1,4 @@
+
 var App = {
 		serviceURL: '',
 		selectedProfileUrl: 'http://multumesc.org',
@@ -40,60 +41,89 @@ var App = {
                 "lengthMenu": [[10, 25, 50, -1],
                     [10, 25, 50, "Toate"]],
                 "autoWidth": true,
-                columns: [{
-                    title: "Nume"
-                }, {
-                    title: "Partid"
-                }, {
-                    title: "Județ"
-                },
+                columns: [
+                    {
+                        title: "Nume"
+                    }, {
+                        title: "Partid"
+                    }, {
+                        title: "Județ"
+                    },
                     {
                         title: "Nume firmă"
                     }, {
                         title: "Tip de activitate"
                     }, {
-                        title: "CUI"
-                    }, {
-                        title: "Nr. Registrul Comertului"
-                    }, {
+                        title: "CUI",
+                        type:"html-num-fmt"
+                    }
+                    //,{
+                    //    title: "Nr. Registrul Comertului"
+                    //}
+                    , {
                         title: "Stare societate"
                     },
                     {
-                        title: "Număr mențiuni Buletinul Procedurilor de Insolvență"
+                        title: "Număr mențiuni Buletinul Procedurilor de Insolvență",
+                        type:"html-num-fmt"
                     },
                     {
-                        title: "Număr dosare juridice"
+                        title: "Număr dosare juridice",
+                        type:"html-num-fmt"
                     },
                     {
                         title: "Anul ultimului bilanț financiar disponibil"
                     }
                     , {
                         title: "Număr angajați"
-                    },{
-                        title: "Datorii"
+                        ,
+                        type:"html-num-fmt"
                     }, {
-                        title: "Capital total"
+                        title: "Datorii",
+                        type:"html-num-fmt"
                     }, {
-                        title: "Venituri totale"
+                        title: "Capital total",
+                        type:"html-num-fmt"
                     }, {
-                        title: "Cheltuieli totale"
+                        title: "Venituri totale",
+                        type:"html-num-fmt"
                     }, {
-                        title: "Profit/pierdere net"
+                        title: "Cheltuieli totale",
+                        type:"html-num-fmt"
+                    }, {
+                        title: "Profit net",
+                        type:"html-num-fmt"
+                    },
+                    {
+                        title: "Pierdere",
+                        type:"html-num-fmt"
                     }
 
                 ],
                 stateSave: false,
                 iDisplayLength: 10,
                 stateDuration: 43200,
-                "order": [[4, "desc"]]
+                "order": [[15, "desc"]]
             });
         },
-		
 
-		
+
+        formatNumber:function(num)
+        {
+            var x = Number(num);
+            if (!isNaN(x)) {
+
+                return x.toLocaleString();
+            }
+            else
+            {
+                return null;
+            }
+        },
+
 		prepareIndividualData: function(res) {
             App.preparedIndividualData=[];
-            var emptyLabel="n/a";
+            var emptyLabel=null;
             $.each(res, function(keyDeputy, itemDeputy) {
                 console.log(itemDeputy.nume);
                 var hasCompany=false;
@@ -119,14 +149,16 @@ var App = {
                         localCandidate.push(deputyName);
                         localCandidate.push(deputyParty);
                         localCandidate.push(deputyCounty);
-                        localCandidate.push(itemCompany.denumire);
+                        //TODO: Deschide un modal/overlay care contine un inframe la care voi face rost de link ulterior
+                        //TODO: Modalul poate contine un alt link target=_blank catre pagina termene.ro
+                        localCandidate.push('<a href="#">'+itemCompany.denumire+"</a>");
                         if (lastBalance!=null)
                         localCandidate.push(lastBalance.tip_activitate);
                         else
                             localCandidate.push(emptyLabel);
 
                         localCandidate.push(itemCompany.cui);
-                        localCandidate.push(itemCompany.nr_reg_com);
+                        //localCandidate.push(itemCompany.nr_reg_com);
                         localCandidate.push(itemCompany.stare_societate);
                         localCandidate.push(itemCompany.nr_mentiuni_BPI);
                         localCandidate.push(itemCompany.nr_dosare_juridice);
@@ -134,17 +166,22 @@ var App = {
                         {
                             localCandidate.push(lastBalance.an);
                             localCandidate.push(lastBalance.numar_mediu_angajati);
-                            localCandidate.push(lastBalance.datorii);
-                            localCandidate.push(lastBalance.capital_total);
-                            localCandidate.push(lastBalance.venituri_total);
-                            localCandidate.push(lastBalance.cheltuieli_totale);
+                            localCandidate.push(App.formatNumber(lastBalance.datorii));
+                            localCandidate.push(App.formatNumber(lastBalance.capital_total));
+                            localCandidate.push(App.formatNumber(lastBalance.venituri_total));
+                            localCandidate.push(App.formatNumber(lastBalance.cheltuieli_totale));
                             if (lastBalance.profit_net != '-')
                             {
-                                localCandidate.push(lastBalance.profit_net);
+                                localCandidate.push(App.formatNumber(lastBalance.profit_net));
                             }
-                            else if (lastBalance.pierdere_net != '-')
+                            else
                             {
-                                localCandidate.push(lastBalance.pierdere_net);
+                                localCandidate.push(emptyLabel);
+                            }
+
+                            if (lastBalance.pierdere_net != '-')
+                            {
+                                localCandidate.push('<span style="color: red;">'+(App.formatNumber("-"+lastBalance.pierdere_net))+'</span>');
                             }
                             else
                             {
@@ -162,7 +199,7 @@ var App = {
                             localCandidate.push(emptyLabel);
                             localCandidate.push(emptyLabel);
                             localCandidate.push(emptyLabel);
-
+                            localCandidate.push(emptyLabel);
                         }
 
                         App.preparedIndividualData.push(localCandidate);
