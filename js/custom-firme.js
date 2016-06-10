@@ -128,15 +128,16 @@ var App = {
                 console.log(itemDeputy.nume);
                 var hasCompany=false;
                 var deputyName=itemDeputy.nume;
-                var deputyParty='';
-                var deputyCounty='';
-                if (itemDeputy.date && itemDeputy.date.actionar)
+                var deputyParty=itemDeputy.partid;
+                var deputyCounty=itemDeputy.judet;
+                if (itemDeputy.data && itemDeputy.data.actionar)
                 {
                     hasCompany=true;
-                    $.each(itemDeputy.date.actionar, function(keyCompany, itemCompany) {
+                    $.each(itemDeputy.data.actionar, function(keyCompany, itemCompany) {
                         console.log(itemCompany.denumire);
                         var lastYear=1990;
                         var lastBalance=null;
+                        if (itemCompany.bilanturi)
                         $.each(itemCompany.bilanturi, function(keyBalance, itemBalance) {
                             if (itemBalance.an>lastYear)
                             {
@@ -145,32 +146,54 @@ var App = {
                             }
                         });
                         var localCandidate = [];
-
+                        if (itemDeputy.grafic)
+                        {
+                            localCandidate.push('<a href="#">'+deputyName+'</a>')
+                        }
+                        else
                         localCandidate.push(deputyName);
+                        if (deputyParty)
                         localCandidate.push(deputyParty);
+                        else
+                        localCandidate.push(emptyLabel);
+                        if (deputyCounty)
                         localCandidate.push(deputyCounty);
+                        else
+                        localCandidate.push(emptyLabel);
                         //TODO: Deschide un modal/overlay care contine un inframe la care voi face rost de link ulterior
+                        var iframe_url=itemDeputy.grafic;
                         //TODO: Modalul poate contine un alt link target=_blank catre pagina termene.ro
-                        localCandidate.push('<a href="#">'+itemCompany.denumire+"</a>");
-                        if (lastBalance!=null)
+                       if (itemCompany.url_termene)
+                       localCandidate.push('<a href="'+itemCompany.url_termene+'" target="_blank">'+itemCompany.denumire+'</a>');
+                       else
+                       localCandidate.push(itemCompany.denumire);
+                        if (lastBalance && lastBalance.tip_activitate)
                         localCandidate.push(lastBalance.tip_activitate);
                         else
                             localCandidate.push(emptyLabel);
-
+                        if (itemCompany.cui)
                         localCandidate.push(itemCompany.cui);
+                        else
+                        localCandidate.push(emptyLabel);
                         //localCandidate.push(itemCompany.nr_reg_com);
+                        if (itemCompany.stare_societate)
                         localCandidate.push(itemCompany.stare_societate);
+                        else
+                        localCandidate.push(emptyLabel);
                         localCandidate.push(itemCompany.nr_mentiuni_BPI);
                         localCandidate.push(itemCompany.nr_dosare_juridice);
-                        if (lastBalance!=null)
+                        if (lastBalance)
                         {
-                            localCandidate.push(lastBalance.an);
-                            localCandidate.push(lastBalance.numar_mediu_angajati);
+                            localCandidate.push(lastBalance.an.toString());
+                            if (lastBalance.numar_mediu_angajati)
+                            localCandidate.push(lastBalance.numar_mediu_angajati.toString());
+                            else
+                                localCandidate.push('-');
                             localCandidate.push(App.formatNumber(lastBalance.datorii));
                             localCandidate.push(App.formatNumber(lastBalance.capital_total));
                             localCandidate.push(App.formatNumber(lastBalance.venituri_total));
                             localCandidate.push(App.formatNumber(lastBalance.cheltuieli_totale));
-                            if (lastBalance.profit_net != '-')
+                            if (lastBalance.profit_net && lastBalance.profit_net != '-')
                             {
                                 localCandidate.push(App.formatNumber(lastBalance.profit_net));
                             }
@@ -179,9 +202,9 @@ var App = {
                                 localCandidate.push(emptyLabel);
                             }
 
-                            if (lastBalance.pierdere_net != '-')
+                            if (lastBalance.pierdere_net && lastBalance.pierdere_net != '-')
                             {
-                                localCandidate.push('<span style="color: red;">'+(App.formatNumber("-"+lastBalance.pierdere_net))+'</span>');
+                                localCandidate.push('<span style="color: red;">'+(App.formatNumber(lastBalance.pierdere_net))+'</span>');
                             }
                             else
                             {
