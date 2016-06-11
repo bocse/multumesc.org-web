@@ -117,34 +117,34 @@
             </button>
         </div>
 		<div class="modal fade" id="search" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<p class="modal-title small" id="searchModal"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-								Caută deputatul care te reprezintă după județul, localitatea și strada ta  de domiciliu.</p>
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<p class="modal-title small" id="searchModal"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+							Caută deputatul care te reprezintă după județul, localitatea și strada ta  de domiciliu.</p>
+					</div>
+					<div class="modal-body">
+                        <div id="waitingSearchLoad"><span class="glyphicon glyphicon-time" aria-hidden="true"/> Se încarcă 35.000+ de străzi și 2.500 de localități</div>
+						<div  id="searchInputGroup" style="display:none;" class="input-group">
+							<select class="form-control" id="circumscription" name="circumscription">
+								<option selected="true" style="display:none;" value="">Județ</option>
+							</select>
+
+							<select style="display:none;" class="form-control" id="localityDropdown" name="locality">
+								<option selected="true" style="display:none;" value="">Localitate</option>
+							</select>
+
+							<input style="display: none;" type="text" class="form-control" id="street" placeholder="Strada (ex: ferdinand, unirii, independentei)">
+							<button style="display: none;" type="button" id="doSearch" class="btn btn-danger pull-right">Caută deputatul!</button>
 						</div>
-						<div class="modal-body">
-                            <div id="waitingSearchLoad"><span class="glyphicon glyphicon-time" aria-hidden="true"/> Se încarcă 35.000+ de străzi și 2.500 de localități</div>
-							<div  id="searchInputGroup" style="display:none;" class="input-group">
-								<select class="form-control" id="circumscription" name="circumscription">
-									<option selected="true" style="display:none;" value="">Județ</option>
-								</select>
 
-								<select style="display:none;" class="form-control" id="localityDropdown" name="locality">
-									<option selected="true" style="display:none;" value="">Localitate</option>
-								</select>
+						<table class="table" id="searchResults">
 
-								<input style="display: none;" type="text" class="form-control" id="street" placeholder="Strada (ex: ferdinand, unirii, independentei)">
-								<button style="display: none;" type="button" id="doSearch" class="btn btn-danger pull-right">Caută deputatul!</button>
-							</div>
-
-							<table class="table" id="searchResults">
-
-							</table>
-						</div>
+						</table>
 					</div>
 				</div>
+			</div>
 		</div>
 
         <div class="row">

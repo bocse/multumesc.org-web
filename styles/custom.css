@@ -300,6 +300,10 @@ div.dataTables_wrapper div.dataTables_paginate {
   top: 20px;
 }
 
+#companyInfoModal .modal-dialog {
+  width: 1200px;
+}
+
 #badgeWrapper img {
   width: 200px;
   margin-right: 20px;

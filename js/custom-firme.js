@@ -125,7 +125,7 @@ var App = {
         App.preparedIndividualData=[];
         var emptyLabel=null;
         $.each(res, function(keyDeputy, itemDeputy) {
-            console.log(itemDeputy.nume);
+            //console.log(itemDeputy.nume);
             var hasCompany=false;
             var deputyName=itemDeputy.nume;
             var deputyParty=itemDeputy.partid;
@@ -134,7 +134,7 @@ var App = {
             {
                 hasCompany=true;
                 $.each(itemDeputy.data.actionar, function(keyCompany, itemCompany) {
-                    console.log(itemCompany.denumire);
+                    //console.log(itemCompany.denumire);
                     var lastYear=1990;
                     var lastBalance=null;
                     if (itemCompany.bilanturi)
@@ -163,8 +163,14 @@ var App = {
                     //TODO: Deschide un modal/overlay care contine un inframe la care voi face rost de link ulterior
                     var iframe_url=itemDeputy.grafic;
                     //TODO: Modalul poate contine un alt link target=_blank catre pagina termene.ro
-                   if (itemCompany.url_termene)
-                   localCandidate.push('<a href="'+itemCompany.url_termene+'" target="_blank">'+itemCompany.denumire+'</a>');
+                   if (itemCompany.url_termene) {
+                	   localCandidate.push('<a id="companyInfoTrigger" data-toggle="modal" data-target="#companyInfoModal" class="company-name" href="#" target="_blank">'
+                			   + itemCompany.denumire + '</a>');
+                	   $('#companyInfoModal .modal-body').html(iframe_url);
+                	   //$('#companyIframe').attr('src', itemCompany.url_termene);
+                	   //TODO: repair iframe content to be newly generated for each iframe
+                   }
+                   
                    else
                    localCandidate.push(itemCompany.denumire);
                     if (lastBalance && lastBalance.tip_activitate)
@@ -264,5 +270,9 @@ $(document).ready(function() {
 		App.searchAddress($('#circumscription').val(), $('#localityDropdown').val(), $('#street').val());
 	});
 
-
+	$("#companyInfoTrigger").click(function(event) {
+		event.preventDefault();
+		$('#companyInfoModal').modal();
+		
+	});
 });
