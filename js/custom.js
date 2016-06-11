@@ -502,13 +502,14 @@ var App = {
 				},
 					{
 						title : "Indice de penalitate (număr comunicate DNA)"
-					},{
+					},
+                    /*{
 					title : "Absențe în ultimele 30 zile"
 				}, {
 					title : "Absență în ultimele 90 zile"
 				}, {
 					title : "Absență în ultimele 365 zile"
-				}, {
+				},*/ {
 					title : "Absență per mandat"
 				}, {
 					title : "Luări de cuvânt"
@@ -654,7 +655,8 @@ var App = {
 					{
 						localCandidate.push("0");
 					}
-					if (item.statsLast30Days.TOTAL.value > 0) {
+					/*
+                    if (item.statsLast30Days.TOTAL.value > 0) {
 						var absence30 = Math.round(10.0 * 100.0
 								* item.statsLast30Days.ABSENT.value
 								/ item.statsLast30Days.TOTAL.value) / 10.0;
@@ -693,7 +695,7 @@ var App = {
 							+ Math.round((1.0 - absence365 / 100.0)
 									* App.maxBlue) + ')">' + absence365
 							+ '%</span>');
-
+                    */
 					var absenceAllTerm = Math.round(10.0 * 100.0
 							* item.statsAllTerm.ABSENT.value
 							/ item.statsAllTerm.TOTAL.value) / 10.0;

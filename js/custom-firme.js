@@ -104,16 +104,20 @@ var App = {
             stateSave: false,
             iDisplayLength: 10,
             stateDuration: 43200,
-            "order": [[15, "desc"]]
-        });
-        $('.deputy-element').click(function (event) {
-            console.log('Modal: '+$(this).attr('data-index'));
-            console.log('URL: '+App.chartArray[$(this).attr('data-index')]);
-            event.preventDefault();
-            $('#companyInfoModal .modal-body').html(App.chartArray[$(this).attr('data-index')]);
-            $('#companyInfoModal').modal();
+            "order": [[15, "desc"]],
+            "drawCallback": function( settings ) {
+                //alert( 'DataTables has redrawn the table' );
+                $('.deputy-element').on("click", function (event) {
+                    console.log('Modal: '+$(this).attr('data-index'));
+                    console.log('URL: '+App.chartArray[$(this).attr('data-index')]);
+                    event.preventDefault();
+                    $('#companyInfoModal .modal-body').html(App.chartArray[$(this).attr('data-index')]);
+                    $('#companyInfoModal').modal();
 
+                });
+            }
         });
+
     },
 
 
