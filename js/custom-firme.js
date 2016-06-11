@@ -5,6 +5,7 @@ var App = {
 	lastUpdateDate: null,
 	lastUpdateTimestamp: null,
     preparedIndividualData: [],
+    chartArray:[],
 	crawlTime: null,
 	errorCount: null,
 	successful: null,	
@@ -105,6 +106,14 @@ var App = {
             stateDuration: 43200,
             "order": [[15, "desc"]]
         });
+        $('.deputy-element').click(function (event) {
+            console.log('Modal: '+$(this).attr('data-index'));
+            console.log('URL: '+App.chartArray[$(this).attr('data-index')]);
+            event.preventDefault();
+            $('#companyInfoModal .modal-body').html(App.chartArray[$(this).attr('data-index')]);
+            $('#companyInfoModal').modal();
+
+        });
     },
 
 
@@ -124,6 +133,7 @@ var App = {
 	prepareIndividualData: function(res) {
         App.preparedIndividualData=[];
         var emptyLabel=null;
+        var deputyIndex=0;
         $.each(res, function(keyDeputy, itemDeputy) {
             //console.log(itemDeputy.nume);
             var hasCompany=false;
@@ -132,8 +142,11 @@ var App = {
             var deputyCounty=itemDeputy.judet;
             if (itemDeputy.data && itemDeputy.data.actionar)
             {
+                App.chartArray.push(itemDeputy.grafic);
+                deputyIndex++;
                 hasCompany=true;
                 $.each(itemDeputy.data.actionar, function(keyCompany, itemCompany) {
+                    //companyIndex++;
                     //console.log(itemCompany.denumire);
                     var lastYear=1990;
                     var lastBalance=null;
@@ -148,10 +161,15 @@ var App = {
                     var localCandidate = [];
                     if (itemDeputy.grafic)
                     {
-                        localCandidate.push('<a href="#">'+deputyName+'</a>');
+                        //chartArray.push(itemDeputy.grafic);
+                        localCandidate.push('<a  data-index="'+(deputyIndex-1)+'" id="#companyInfoModal" class="deputy-element" href="#" >'
+                        + deputyName + '</a>');
+
+                        //localCandidate.push('<a href="#">'+deputyName+'</a>');
                     }
                     else
                     localCandidate.push(deputyName);
+
                     if (deputyParty)
                     localCandidate.push(deputyParty);
                     else
@@ -164,11 +182,8 @@ var App = {
                     var iframe_url=itemDeputy.grafic;
                     //TODO: Modalul poate contine un alt link target=_blank catre pagina termene.ro
                    if (itemCompany.url_termene) {
-                	   localCandidate.push('<a id="companyInfoTrigger" data-toggle="modal" data-target="#companyInfoModal" class="company-name" href="#" target="_blank">'
-                			   + itemCompany.denumire + '</a>');
-                	   $('#companyInfoModal .modal-body').html(iframe_url);
-                	   //$('#companyIframe').attr('src', itemCompany.url_termene);
-                	   //TODO: repair iframe content to be newly generated for each iframe
+
+                      localCandidate.push('<a href="'+itemCompany.url_termene+'" target="_blank">'+itemCompany.denumire+'</a>');
                    }
                    
                    else
@@ -235,6 +250,7 @@ var App = {
                 });
             }
 
+
         });
     }
 };
@@ -261,18 +277,8 @@ $(document).ready(function() {
 	});
 
 
-	$('#button-365').change(function() {
-		App.plotParties(365);
-	});
-
-
-	$('#doSearch').click(function() {
-		App.searchAddress($('#circumscription').val(), $('#localityDropdown').val(), $('#street').val());
-	});
-
-	$("#companyInfoTrigger").click(function(event) {
-		event.preventDefault();
-		$('#companyInfoModal').modal();
-		
-	});
+	//$("#companyInfoTrigger").click(function(event) {
+	//
+	//
+	//});
 });
