@@ -126,7 +126,7 @@ var App = {
         var x = Number(num);
         if (!isNaN(x)) {
 
-            return x.toLocaleString();
+            return x.toLocaleString('en-US');
         }
         else
         {
