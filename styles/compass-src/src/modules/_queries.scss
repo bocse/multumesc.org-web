@@ -2,10 +2,18 @@
 @media screen and (min-width: 1200px) {
 }
 
-/* Landscape tablet to desktop */
-@media screen and (max-width: 1399px) {
-	
+/* special case, too wide table creates browser scroll */
+@media screen and (max-width: 1600px) {
+	.too-wide {
+    .row:nth-of-type(2) {
+      overflow-x: scroll;
+    }
+  }
 }
+
+
+
+
  
 /* Landscape tablet*/
 @media screen and (min-width: 768px) and (max-width: 1024px) {

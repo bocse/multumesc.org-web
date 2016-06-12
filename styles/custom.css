@@ -25,6 +25,11 @@
   color: #9f2623;
 }
 
+.page-link {
+  margin: 25px 0;
+  text-decoration: underline;
+}
+
 table a:link {
   color: #337ab7;
   font-weight: bold;
@@ -297,7 +302,6 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
 
 div.dataTables_wrapper div.dataTables_paginate {
   position: relative;
-  top: 20px;
 }
 
 #companyInfoModal .modal-dialog {
@@ -315,6 +319,11 @@ div.dataTables_wrapper div.dataTables_paginate {
 }
 
 /* Large desktop, full HD */
-/* Landscape tablet to desktop */
+/* special case, too wide table creates browser scroll */
+@media screen and (max-width: 1600px) {
+  .too-wide .row:nth-of-type(2) {
+    overflow-x: scroll;
+  }
+}
 /* Landscape tablet*/
 /* Phone and maybe some other smaller devices*/
