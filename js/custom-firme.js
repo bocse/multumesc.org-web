@@ -164,10 +164,10 @@ var App = {
                     title: "Număr mențiuni Buletinul Procedurilor de Insolvență",
                     type:"html-num-fmt"
                 },
-                {
-                    title: "Număr dosare juridice",
-                    type:"html-num-fmt"
-                },
+                //{
+                //    title: "Număr dosare juridice",
+                //    type:"html-num-fmt"
+                //},
                 {
                     title: "Anul ultimului bilanț financiar disponibil"
                 }
@@ -200,7 +200,7 @@ var App = {
             stateSave: false,
             iDisplayLength: 10,
             stateDuration: 43200,
-            "order": [[15, "desc"]],
+            "order": [[14, "desc"]],
             "drawCallback": function( settings ) {
                 //alert( 'DataTables has redrawn the table' );
                 $('.deputy-element').on("click", function (event) {
@@ -233,7 +233,8 @@ var App = {
 
 	prepareIndividualData: function(res) {
         App.preparedIndividualData=[];
-        var emptyLabel=null;
+        var emptyNumericLabel="0";
+        var emptyStringLabel="";
         var deputyIndex=0;
         $.each(res, function(keyDeputy, itemDeputy) {
             //console.log(itemDeputy.nume);
@@ -274,11 +275,11 @@ var App = {
                     if (deputyParty)
                     localCandidate.push(deputyParty);
                     else
-                    localCandidate.push(emptyLabel);
+                    localCandidate.push(emptyStringLabel);
                     if (deputyCounty)
                     localCandidate.push(deputyCounty);
                     else
-                    localCandidate.push(emptyLabel);
+                    localCandidate.push(emptyStringLabel);
                     //TODO: Deschide un modal/overlay care contine un inframe la care voi face rost de link ulterior
                     var iframe_url=itemDeputy.grafic;
                     //TODO: Modalul poate contine un alt link target=_blank catre pagina termene.ro
@@ -292,36 +293,39 @@ var App = {
                     if (lastBalance && lastBalance.tip_activitate)
                     localCandidate.push(lastBalance.tip_activitate);
                     else
-                        localCandidate.push(emptyLabel);
+                        localCandidate.push(emptyStringLabel);
                     if (itemCompany.cui)
                     localCandidate.push(itemCompany.cui);
                     else
-                    localCandidate.push(emptyLabel);
+                    localCandidate.push(emptyNumericLabel);
                     //localCandidate.push(itemCompany.nr_reg_com);
                     if (itemCompany.stare_societate)
                     localCandidate.push(itemCompany.stare_societate);
                     else
-                    localCandidate.push(emptyLabel);
+                    localCandidate.push(emptyStringLabel);
                     localCandidate.push(itemCompany.nr_mentiuni_BPI);
-                    localCandidate.push(itemCompany.nr_dosare_juridice);
+                    //localCandidate.push(itemCompany.nr_dosare_juridice);
                     if (lastBalance)
                     {
                         localCandidate.push(lastBalance.an.toString());
                         if (lastBalance.numar_mediu_angajati)
                         localCandidate.push(lastBalance.numar_mediu_angajati.toString());
                         else
-                            localCandidate.push('-');
+                            localCandidate.push(emptyNumericLabel);
                         localCandidate.push(App.formatNumber(lastBalance.datorii));
                         localCandidate.push(App.formatNumber(lastBalance.capital_total));
                         localCandidate.push(App.formatNumber(lastBalance.venituri_total));
+                        if (lastBalance.cheltuieli_totale)
                         localCandidate.push(App.formatNumber(lastBalance.cheltuieli_totale));
+                        else
+                            localCandidate.push(emptyNumericLabel);
                         if (lastBalance.profit_net && lastBalance.profit_net != '-')
                         {
                             localCandidate.push(App.formatNumber(lastBalance.profit_net));
                         }
                         else
                         {
-                            localCandidate.push(emptyLabel);
+                            localCandidate.push("0");
                         }
 
                         if (lastBalance.pierdere_net && lastBalance.pierdere_net != '-')
@@ -330,21 +334,21 @@ var App = {
                         }
                         else
                         {
-                            localCandidate.push(emptyLabel);
+                            localCandidate.push("0");
                         }
 
 
                     }
                     else
                     {
-                        localCandidate.push(emptyLabel);
-                        localCandidate.push(emptyLabel);
-                        localCandidate.push(emptyLabel);
-                        localCandidate.push(emptyLabel);
-                        localCandidate.push(emptyLabel);
-                        localCandidate.push(emptyLabel);
-                        localCandidate.push(emptyLabel);
-                        localCandidate.push(emptyLabel);
+                        localCandidate.push(emptyNumericLabel);
+                        localCandidate.push(emptyNumericLabel);
+                        localCandidate.push(emptyNumericLabel);
+                        localCandidate.push(emptyNumericLabel);
+                        localCandidate.push(emptyNumericLabel);
+                        localCandidate.push(emptyNumericLabel);
+                        localCandidate.push(emptyNumericLabel);
+                        localCandidate.push(emptyNumericLabel);
                     }
 
                     App.preparedIndividualData.push(localCandidate);
