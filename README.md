@@ -2,6 +2,8 @@
 
 This project represents the front-end interface of http://multumesc.org 
 (including content, text, images etc)
+If you are looking for the backend application which extracts the data from Chamber of Deputy website, go to this repo:
+https://github.com/bocse/multumesc.org
 
 Please note that all content is static and should be distributable solely by CDN
 The full architecture of the project is described here
@@ -16,3 +18,6 @@ Make sure the .json files in /data are up-to-date.
 You can also get the latest version of data files directly from:
 http://multumesc.org/data/personStatsTogether.json
 http://multumesc.org/data/partyStats.json
+
+
+
