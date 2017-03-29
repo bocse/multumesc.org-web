@@ -632,7 +632,7 @@ var App = {
 					localCandidate.push(item.currentParty);
 					localCandidate
 							.push(App.capitalizeFirstLetter(item.county));
-					if (item.colegiu != -1)
+					if (item.colegiu && item.colegiu != -1)
 						localCandidate.push(item.colegiu);
 					else
 						localCandidate.push("-");
