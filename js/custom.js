@@ -529,7 +529,7 @@ var App = {
 				stateSave : false,
 				iDisplayLength : 10,
 				stateDuration : 43200,
-				"order" : [ [ 4, "desc" ] ]
+				"order" : [ [ 5, "desc" ] ]
 			});
 		},
 		
