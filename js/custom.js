@@ -335,7 +335,7 @@ var App = {
 			$('.profileLink').attr(
 					"href",
 					"http://www.cdep.ro/pls/parlam/structura2015.mp?idm="
-							+ App.loadedIndividualData[nume].personId + "&cam=2&leg=2012");
+							+ App.loadedIndividualData[nume].personId + "&cam=2&leg=2016");
 			$('#deputyDetailsTab').fadeIn(500);
 			$('body').delay(10).animate({
 				scrollTop : $("#deputyDetailsTab").offset().top
